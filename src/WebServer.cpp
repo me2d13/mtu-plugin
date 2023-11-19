@@ -7,6 +7,8 @@
 #include <vector>
 #include <iterator>
 #include "WebServer.h"
+#include <plog/Log.h>
+
 
 using namespace std;
 
@@ -19,6 +21,7 @@ void WebServer::onMessageReceived(int clientSocket, const char* msg, int length)
 
 	// Some defaults for output to the client (404 file not found 'page')
 	string content = "<h1>404 Not Found</h1>";
+	string contentType = "text/html";
 	string htmlFile = "/index.html";
 	int errorCode = 404;
 
@@ -35,7 +38,24 @@ void WebServer::onMessageReceived(int clientSocket, const char* msg, int length)
 		}
 	}
 
-	if (htmlFile == "/log") {
+	// if htmlFile matches /api/something, make api call with something as a parameter
+	if (htmlFile.find("/api/") == 0) {
+		// get the parameter
+		string parameter = htmlFile.substr(5);
+		// call the api
+		ApiResponse response = m_apiController.handleRequest(parameter);
+		if (response.handled) {
+			content = response.response;
+			// always json content type
+			contentType = "application/json";
+			errorCode = 200;
+		} else {
+			PLOGE << "API call not found: " << htmlFile;
+			content = "API call not found";
+			contentType = "text/plain";
+			errorCode = 404;
+		}
+	} else if (htmlFile == "/log") {
 		// build content from log messages
 		ostringstream oss;
 		oss << "<html><head><title>Log</title></head><body><h1>Log</h1><ul>";
@@ -71,7 +91,7 @@ void WebServer::onMessageReceived(int clientSocket, const char* msg, int length)
 	ostringstream oss;
 	oss << "HTTP/1.1 " << errorCode << " OK\r\n";
 	oss << "Cache-Control: no-cache, private\r\n";
-	oss << "Content-Type: text/html\r\n";
+	oss << "Content-Type: " << contentType << "\r\n";
 	oss << "Content-Length: " << content.size() << "\r\n";
 	oss << "\r\n";
 	oss << content;

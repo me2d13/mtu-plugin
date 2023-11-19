@@ -19,7 +19,7 @@
 #include <plog/Formatters/TxtFormatter.h>
 #include <plog/Initializers/ConsoleInitializer.h>
 #include <plog/Init.h>
-#include "Config.h"
+#include "global.h"
 
 namespace plog
 {
@@ -75,7 +75,7 @@ PLUGIN_API int XPluginStart(
 
 	strcpy(outName, "MtuPlugin");
 	strcpy(outSig, "eu.me2d.mtu");
-	strcpy(outDesc, "A plugin to communicate with motorized throttle unit.");
+	strcpy(outDesc, "A plugin to communicate with motorized throttle unit");
 
 	XPLMGetSystemPath(outputPath);
 	PLOG_INFO <<"System path: " << outputPath;
@@ -87,7 +87,8 @@ PLUGIN_API int XPluginStart(
 	PLOG_INFO << "Plugin full path: " << outputPath;
 	XPLMExtractFileAndPath(outputPath);
 	PLOG_INFO << "Plugin directory: " << outputPath;
-	getConfig()->readConfigFile(outputPath);
+	glb()->getConfig()->readConfigFile(outputPath);
+	glb()->getXplData()->init();
 
 	//gOutputFile = fopen(outputPath, "w");
 
@@ -165,10 +166,9 @@ float	MyFlightLoopCallback(
 	//float	lon = XPLMGetDataf(gPlaneLon);
 	//float	el = XPLMGetDataf(gPlaneEl);
 
-	/* Write the data to a file. */
-	//fprintf(gOutputFile, "Time=%f, lat=%f,lon=%f,el=%f.\n", elapsed, lat, lon, el);
+	glb()->getXplData()->update();
 
 	/* Return 1.0 to indicate that we want to be called again in 1 second. */
-	return 1.0;
+	return 0.1;
 }
 

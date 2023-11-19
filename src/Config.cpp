@@ -6,12 +6,6 @@
 #include "json.hpp"
 #include <plog/Log.h>
 
-Config* getConfig()
-{
-	static Config config;
-	return &config;
-}
-
 bool Config::readConfigFile(std::string pConfigPath)
 {
 	configPath = pConfigPath;
@@ -23,12 +17,12 @@ bool Config::readConfigFile(std::string pConfigPath)
 		PLOGE << fullPath << " not found";
 		return false;
 	}
-	PLOGD << "Reading config from config.json...";
+	PLOGD << "Reading config from " << fullPath;
 	nlohmann::json j;
 	try {
 		i >> j;
-		comPort = j["port"];
-		serverPort = j["serverPort"];
+		comPort = j.value("port", "COM1");
+		serverPort = j.value("serverPort", 8080);
 	}
 	catch (nlohmann::json::exception& e) {
 		PLOGE << "Error reading config.json: " << e.what();
@@ -38,7 +32,7 @@ bool Config::readConfigFile(std::string pConfigPath)
 	i.close();
 	// print the values read from the JSON file
 	PLOGD << "COM port: " << comPort;
-	PLOGD << "Serer port: " << serverPort;
+	PLOGD << "Server port: " << serverPort;
 	return true;
 }
 

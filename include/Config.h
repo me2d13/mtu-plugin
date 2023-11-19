@@ -15,5 +15,3 @@ public:
 	int getServerPort();
 	std::string getConfigPath();
 };
-
-Config* getConfig();

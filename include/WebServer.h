@@ -3,6 +3,7 @@
 #include "TcpListener.h"
 #include <deque>
 #include <string>
+#include "ApiController.h"
 
 
 class WebServer : public TcpListener
@@ -26,4 +27,5 @@ protected:
 
 private:
 	std::deque<std::wstring>* m_logMessages;
+	ApiController m_apiController;
 };
