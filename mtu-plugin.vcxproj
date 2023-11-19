@@ -29,6 +29,9 @@
     <ClInclude Include="include\TcpListener.h" />
     <ClInclude Include="include\WebServer.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include=".gitignore" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>17.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
