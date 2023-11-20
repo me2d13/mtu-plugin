@@ -15,8 +15,7 @@ ApiResponse ApiController::handleRequest(std::string request) {
 std::string ApiController::handleXplRequest() {
 	nlohmann::json j;
 	j["elevator_trim"] = glb()->getXplData()->getElevatorTrimValue();
-	// TODO: add following
-	j["in_flight"] = false;
-	j["aircraft"] = "Cessna 172SP";
+	j["in_flight"] = glb()->getXplData()->isInFlight();
+	j["aircraft"] = glb()->getXplData()->getAircraft();
 	return j.dump();
 }

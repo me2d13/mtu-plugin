@@ -152,6 +152,7 @@ PLUGIN_API void XPluginReceiveMessage(
 	int				inMessage,
 	void* inParam)
 {
+	glb()->getXplData()->onPluginReceiveMessage(inFromWho, inMessage, inParam);
 }
 
 float	MyFlightLoopCallback(
