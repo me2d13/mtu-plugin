@@ -27,6 +27,7 @@
     <ClCompile Include="src\SerialService.cpp" />
     <ClCompile Include="src\TcpListener.cpp" />
     <ClCompile Include="src\WebServer.cpp" />
+    <ClCompile Include="src\Xpl2SerialSyncService.cpp" />
     <ClCompile Include="src\XplData.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -37,6 +38,7 @@
     <ClInclude Include="include\SerialService.h" />
     <ClInclude Include="include\TcpListener.h" />
     <ClInclude Include="include\WebServer.h" />
+    <ClInclude Include="include\Xpl2SerialSyncService.h" />
     <ClInclude Include="include\XplData.h" />
   </ItemGroup>
   <ItemGroup>

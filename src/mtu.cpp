@@ -90,6 +90,7 @@ PLUGIN_API int XPluginStart(
 	glb()->getConfig()->readConfigFile(outputPath);
 	glb()->getXplData()->init();
 	glb()->getSerialService()->connect(glb()->getConfig()->getComPort());
+	glb()->getXpl2SerialSyncService()->start();
 
 	//gOutputFile = fopen(outputPath, "w");
 
@@ -132,6 +133,7 @@ PLUGIN_API void	XPluginStop(void)
 	webServerThread.join();
 	XPLMDebugString("Web server stopped\n");
 
+	glb()->getXpl2SerialSyncService()->stop();
 	glb()->getSerialService()->shutdown();
 
 	/* Close the file */
