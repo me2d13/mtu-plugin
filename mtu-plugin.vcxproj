@@ -23,6 +23,8 @@
     <ClCompile Include="src\global.cpp" />
     <ClCompile Include="src\Config.cpp" />
     <ClCompile Include="src\mtu.cpp" />
+    <ClCompile Include="src\serialib.cpp" />
+    <ClCompile Include="src\SerialService.cpp" />
     <ClCompile Include="src\TcpListener.cpp" />
     <ClCompile Include="src\WebServer.cpp" />
     <ClCompile Include="src\XplData.cpp" />
@@ -31,6 +33,8 @@
     <ClInclude Include="include\ApiController.h" />
     <ClInclude Include="include\global.h" />
     <ClInclude Include="include\Config.h" />
+    <ClInclude Include="include\serialib.h" />
+    <ClInclude Include="include\SerialService.h" />
     <ClInclude Include="include\TcpListener.h" />
     <ClInclude Include="include\WebServer.h" />
     <ClInclude Include="include\XplData.h" />

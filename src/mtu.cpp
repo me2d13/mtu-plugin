@@ -89,6 +89,7 @@ PLUGIN_API int XPluginStart(
 	PLOG_INFO << "Plugin directory: " << outputPath;
 	glb()->getConfig()->readConfigFile(outputPath);
 	glb()->getXplData()->init();
+	glb()->getSerialService()->connect(glb()->getConfig()->getComPort());
 
 	//gOutputFile = fopen(outputPath, "w");
 
@@ -130,6 +131,8 @@ PLUGIN_API void	XPluginStop(void)
 	XPLMDebugString("Waiting for web server to finish\n");
 	webServerThread.join();
 	XPLMDebugString("Web server stopped\n");
+
+	glb()->getSerialService()->shutdown();
 
 	/* Close the file */
 	//fclose(gOutputFile);
